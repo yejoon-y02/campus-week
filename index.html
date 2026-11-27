@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>대학생으로 일주일 살아남기</title>
+  <style>
+    :root { font-family: system-ui, -apple-system, "Malgun Gothic", sans-serif; color: #20352e; background: #edf3f0; line-height: 1.6; font-size: 16px; }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100svh; padding: 40px 16px 24px; }
+    button { font: inherit; cursor: pointer; touch-action: manipulation; }
+    button:disabled { cursor: default; opacity: .6; }
+    button:focus-visible { outline: 3px solid #ac5c1f; outline-offset: 4px; }
+    [hidden] { display: none !important; }
+    main { width: 100%; max-width: 560px; margin: 0 auto; }
+    .brand { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; font-weight: 750; }
+    .brand-mark { width: 32px; height: 32px; border-radius: 10px; display: grid; place-items: center; background: #25654f; color: white; font-size: 14px; }
+    .brand small { margin-left: auto; color: #53675e; font-size: .875rem; font-weight: 500; }
+    .card { background: #fff; border: 1px solid #d8e3dc; border-radius: 24px; padding: 32px; box-shadow: 0 8px 32px #203b2e08; }
+    .eyebrow { color: #32634e; font-size: .875rem; font-weight: 750; letter-spacing: .07em; margin: 0 0 12px; }
+    h1 { font-size: clamp(1.8rem, 6.8vw, 2.45rem); line-height: 1.3; letter-spacing: -.06em; margin: 0 0 16px; word-break: keep-all; overflow-wrap: anywhere; }
+    h2 { font-size: 1.7rem; line-height: 1.4; letter-spacing: -.045em; margin: 0 0 12px; word-break: keep-all; overflow-wrap: anywhere; }
+    h1:focus, h2:focus { outline: none; }
+    p { margin: 0 0 16px; }
+    .muted { color: #52665c; }
+    .intro { max-width: 30em; }
+    .rule-box { background: #f2f6f3; padding: 18px 20px; border-radius: 14px; margin: 24px 0; }
+    .rule-box p { margin: 0; }
+    .rule-box p + p { margin-top: 10px; }
+    .stats { display: grid; gap: 15px; margin: 24px 0; }
+    .stat-top { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 6px; }
+    .stat-top strong { font-variant-numeric: tabular-nums; }
+    .stat-top small { color: #66756e; font-weight: 400; font-size: .875rem; }
+    .track { height: 9px; background: #e9efeb; border-radius: 10px; overflow: hidden; }
+    .fill { display: block; height: 100%; background: #36765d; border-radius: inherit; }
+    .stat:nth-child(2) .fill { background: #b46b32; }
+    .stat:nth-child(3) .fill { background: #7470a7; }
+    .primary { width: 100%; min-height: 52px; border: 0; background: #25654f; border-radius: 12px; color: white; font-weight: 750; padding: 12px 18px; }
+    .primary:hover { background: #194c3a; }
+    .hint { font-size: .875rem; text-align: center; color: #5a6d63; margin: 14px 0 0; }
+    .day-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; font-weight: 700; }
+    .day-count { font-variant-numeric: tabular-nums; color: #52665c; font-size: .875rem; }
+    .week { display: flex; gap: 6px; margin-bottom: 26px; }
+    .week span { flex: 1; min-width: 0; text-align: center; padding: 5px 0; border-radius: 7px; background: #f0f4f1; color: #67766c; font-size: .875rem; }
+    .week .done { background: #e3eee7; color: #32634e; }
+    .week .today { background: #25654f; color: #fff; font-weight: 750; }
+    .choices { display: grid; gap: 12px; margin-top: 24px; }
+    .choice { width: 100%; min-height: 96px; background: #fff; border: 1px solid #cbd9d0; border-radius: 14px; text-align: left; padding: 16px; color: inherit; }
+    .choice:hover { border-color: #25654f; background: #f4f8f5; }
+    .choice-title { display: block; font-size: 1.0625rem; font-weight: 750; margin-bottom: 9px; overflow-wrap: anywhere; }
+    .letter { display: inline-grid; place-items: center; width: 25px; height: 25px; background: #eaf1ec; border-radius: 7px; font-size: .875rem; margin-right: 8px; }
+    .deltas { display: flex; flex-wrap: wrap; gap: 5px 14px; font-size: .875rem; }
+    .positive { color: #25654f; }
+    .negative { color: #9b4534; }
+    .neutral { color: #52665c; }
+    .result-summary { border-left: 3px solid #4a8065; background: #f2f6f3; padding: 15px 16px; border-radius: 0 12px 12px 0; margin: 22px 0; }
+    .result-summary p { margin: 0 0 8px; font-weight: 700; }
+    .section-label { font-size: .875rem; color: #52665c; margin: 24px 0 -10px; font-weight: 600; }
+    .ending-badge { display: inline-block; background: #e6f0e8; color: #25654f; padding: 5px 12px; font-size: .875rem; border-radius: 30px; font-weight: 700; margin-bottom: 18px; }
+    footer { font-size: .875rem; text-align: center; color: #5a6d63; margin-top: 20px; }
+    noscript p { padding: 16px; background: #fff; border: 1px solid #9b4534; border-radius: 12px; }
+    @media (max-width: 440px) { body { padding-top: 24px; } .card { padding: 24px 20px; border-radius: 20px; } .brand { margin-bottom: 16px; } }
+  </style>
+</head>
+<body>
+  <main>
+    <header class="brand"><span class="brand-mark" aria-hidden="true">월</span><span>나의 캠퍼스 위크</span><small>7일의 균형 연습</small></header>
+    <noscript><p>이 게임을 하려면 브라우저에서 JavaScript를 허용해 주세요.</p></noscript>
+    <div class="card" id="game">
+      <section id="start-screen" aria-labelledby="start-title">
+        <p class="eyebrow">CAMPUS WEEK</p>
+        <h1 id="start-title" tabindex="-1">대학생으로<br>일주일 살아남기</h1>
+        <p class="muted intro">수업도, 휴식도, 나의 시간도.<br>하루 한 번의 선택으로 일주일의 균형을 찾아보세요.</p>
+        <div id="start-stats"></div>
+        <div class="rule-box">
+          <p>월요일부터 일요일까지, 매일 두 가지 행동 중 하나를 선택해요.</p>
+          <p>능력치는 0~100. 하나라도 0이 되면 즉시 <strong>재충전 필요</strong>로 끝나요.</p>
+          <p>7일을 버티고 모두 40 이상이면 <strong>균형 달인</strong>, 아니면 <strong>아슬아슬 생존</strong>이에요.</p>
+        </div>
+        <button type="button" class="primary" id="start-button">시작</button>
+        <p class="hint">새로고침하거나 다시 열면 처음부터 시작해요.</p>
+      </section>
+      <section id="choice-screen" aria-labelledby="choice-title" hidden></section>
+      <section id="result-screen" aria-labelledby="result-title" hidden></section>
+      <section id="ending-screen" aria-labelledby="ending-title" hidden></section>
+    </div>
+    <footer>잘하는 날도, 쉬어 가는 날도 나의 일주일.</footer>
+  </main>
+  <script>
+    (() => {
+      'use strict';
+
+      // BRIEF.md의 CSV 순서: 학업, 체력, 행복. A·B 순서를 유지한다.
+      const DAYS = [
+        { day: '월요일', event: '1교시와 늦잠', choices: [
+          { label: '수업에 간다', delta: { academic: 15, stamina: -10, happiness: -5 } },
+          { label: '늦잠을 잔다', delta: { academic: -10, stamina: 15, happiness: 5 } }
+        ] },
+        { day: '화요일', event: '팀플 초안과 친구 약속', choices: [
+          { label: '팀플 초안을 쓴다', delta: { academic: 15, stamina: -10, happiness: -5 } },
+          { label: '친구를 만난다', delta: { academic: -10, stamina: -5, happiness: 15 } }
+        ] },
+        { day: '수요일', event: '동아리와 도서관', choices: [
+          { label: '동아리에 간다', delta: { academic: -5, stamina: -10, happiness: 20 } },
+          { label: '도서관에 간다', delta: { academic: 15, stamina: -5, happiness: -10 } }
+        ] },
+        { day: '목요일', event: '마감과 수면', choices: [
+          { label: '밤새 마무리한다', delta: { academic: 20, stamina: -25, happiness: -10 } },
+          { label: '잠을 충분히 잔다', delta: { academic: -10, stamina: 20, happiness: 5 } }
+        ] },
+        { day: '금요일', event: '나들이와 예습', choices: [
+          { label: '나들이를 간다', delta: { academic: -10, stamina: -5, happiness: 20 } },
+          { label: '다음 주 예습을 한다', delta: { academic: 15, stamina: -10, happiness: -5 } }
+        ] },
+        { day: '토요일', event: '운동과 몰아 공부', choices: [
+          { label: '가볍게 운동한다', delta: { academic: 0, stamina: 20, happiness: 10 } },
+          { label: '몰아서 공부한다', delta: { academic: 20, stamina: -15, happiness: -5 } }
+        ] },
+        { day: '일요일', event: '주간 계획과 드라마', choices: [
+          { label: '다음 주를 계획한다', delta: { academic: 10, stamina: -5, happiness: 5 } },
+          { label: '드라마를 본다', delta: { academic: -5, stamina: 5, happiness: 15 } }
+        ] }
+      ];
+      const STAT_LABELS = { academic: '학업', stamina: '체력', happiness: '행복' };
+      const screens = Object.fromEntries(['start', 'choice', 'result', 'ending'].map(phase =>
+        [phase, document.getElementById(`${phase}-screen`)]));
+
+      function createInitialState() {
+        return { phase: 'start', dayIndex: 0, stats: { academic: 50, stamina: 50, happiness: 50 }, lastResult: null, ending: null };
+      }
+      let state = createInitialState();
+
+      function applyDelta(stats, delta) {
+        return Object.fromEntries(Object.keys(STAT_LABELS).map(key =>
+          [key, Math.min(100, Math.max(0, stats[key] + delta[key]))]));
+      }
+
+      function getEnding(dayIndex, stats) {
+        const values = Object.values(stats);
+        if (values.some(value => value === 0)) return '재충전 필요';
+        if (dayIndex === DAYS.length - 1) return values.every(value => value >= 40) ? '균형 달인' : '아슬아슬 생존';
+        return null;
+      }
+
+      function statsMarkup(stats, before = null) {
+        return `<div class="stats">${Object.entries(STAT_LABELS).map(([key, label]) => `
+          <div class="stat">
+            <div class="stat-top"><span>${label}</span><strong>${before ? `${before[key]} → ` : ''}${stats[key]} <small>/ 100</small></strong></div>
+            <div class="track" role="meter" aria-label="${label}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${stats[key]}"><span class="fill" style="width:${stats[key]}%"></span></div>
+          </div>`).join('')}</div>`;
+      }
+
+      function deltaMarkup(delta) {
+        return `<span class="deltas">${Object.entries(STAT_LABELS).map(([key, label]) => {
+          const value = delta[key];
+          return `<span class="${value > 0 ? 'positive' : value < 0 ? 'negative' : 'neutral'}">${label} ${value > 0 ? '+' : ''}${value}</span>`;
+        }).join('')}</span>`;
+      }
+
+      function dayMarkup() {
+        return `<div class="day-head"><span>${DAYS[state.dayIndex].day}</span><span class="day-count">${state.dayIndex + 1} / 7일</span></div>
+          <div class="week" aria-label="일주일 진행도">${DAYS.map((day, index) => `<span class="${index === state.dayIndex ? 'today' : index < state.dayIndex ? 'done' : ''}"${index === state.dayIndex ? ' aria-current="step"' : ''}>${day.day[0]}</span>`).join('')}</div>`;
+      }
+
+      function resultMarkup() {
+        const result = state.lastResult;
+        return `<div class="result-summary"><p>${result.label}</p>${deltaMarkup(result.delta)}</div>
+          <p class="section-label">능력치 변화 · 선택 전 → 선택 후</p>${statsMarkup(result.after, result.before)}
+          <p class="hint">능력치는 0~100 범위 안에서 반영돼요.</p>`;
+      }
+
+      function render() {
+        Object.entries(screens).forEach(([phase, screen]) => { screen.hidden = phase !== state.phase; });
+        const dayIndex = state.dayIndex;
+        if (state.phase === 'start') {
+          document.getElementById('start-stats').innerHTML = statsMarkup(state.stats);
+        } else if (state.phase === 'choice') {
+          const day = DAYS[dayIndex];
+          screens.choice.innerHTML = `${dayMarkup()}<h2 id="choice-title" tabindex="-1">${day.event}</h2>
+            <p class="muted">오늘의 나에게 필요한 선택은 무엇인가요?</p>${statsMarkup(state.stats)}
+            <div class="choices">${day.choices.map((choice, index) => `<button type="button" class="choice" data-choice="${index}"><span class="choice-title"><span class="letter">${index === 0 ? 'A' : 'B'}</span>${choice.label}</span>${deltaMarkup(choice.delta)}</button>`).join('')}</div>
+            <p class="hint">선택은 한 번만 할 수 있어요.</p>`;
+          screens.choice.querySelectorAll('[data-choice]').forEach(button => {
+            button.addEventListener('click', () => choose(Number(button.dataset.choice), dayIndex), { once: true });
+          });
+        } else if (state.phase === 'result') {
+          screens.result.innerHTML = `${dayMarkup()}<p class="eyebrow">TODAY'S NOTE</p><h2 id="result-title" tabindex="-1">오늘의 선택 완료</h2>
+            <p class="muted">하루를 보냈어요. 바뀐 능력치를 확인해 보세요.</p>${resultMarkup()}
+            <button type="button" class="primary" id="next-button">다음 날</button>`;
+          document.getElementById('next-button').addEventListener('click', () => nextDay(dayIndex), { once: true });
+        } else {
+          const descriptions = {
+            '재충전 필요': '잠깐 쉬어 가도 괜찮아요. 다음 일주일에는 나를 조금 더 챙겨 보세요.',
+            '균형 달인': '공부도, 건강도, 즐거움도 챙겼어요. 균형 잡힌 일주일을 완성했네요!',
+            '아슬아슬 생존': '일주일을 끝까지 버텼어요. 다음에는 부족했던 능력치를 조금 더 돌봐 주세요.'
+          };
+          screens.ending.innerHTML = `<span class="ending-badge">${DAYS[dayIndex].day} · ${dayIndex + 1}일차 종료</span>
+            <h2 id="ending-title" tabindex="-1">${state.ending}</h2><p class="muted">${descriptions[state.ending]}</p>
+            <p class="section-label">마지막 선택과 최종 능력치</p>${resultMarkup()}
+            <button type="button" class="primary" id="restart-button">다시 시작</button>`;
+          document.getElementById('restart-button').addEventListener('click', restartGame, { once: true });
+        }
+        document.getElementById(`${state.phase}-title`).focus({ preventScroll: true });
+        window.scrollTo(0, 0);
+      }
+
+      function startGame() {
+        if (state.phase !== 'start') return;
+        state.phase = 'choice';
+        render();
+      }
+
+      function choose(choiceIndex, expectedDayIndex) {
+        if (state.phase !== 'choice' || state.dayIndex !== expectedDayIndex) return;
+        const choice = DAYS[state.dayIndex].choices[choiceIndex];
+        if (!choice) return;
+        screens.choice.querySelectorAll('button').forEach(button => { button.disabled = true; });
+        const before = { ...state.stats };
+        const after = applyDelta(before, choice.delta);
+        state.lastResult = { day: DAYS[state.dayIndex].day, label: choice.label, delta: { ...choice.delta }, before, after: { ...after } };
+        state.stats = after;
+        state.ending = getEnding(state.dayIndex, after);
+        state.phase = state.ending ? 'ending' : 'result';
+        render();
+      }
+
+      function nextDay(expectedDayIndex) {
+        if (state.phase !== 'result' || state.dayIndex !== expectedDayIndex || state.dayIndex >= DAYS.length - 1) return;
+        state.dayIndex += 1;
+        state.phase = 'choice';
+        render();
+      }
+
+      function restartGame() {
+        if (state.phase !== 'ending') return;
+        state = createInitialState();
+        render();
+      }
+
+      document.getElementById('start-button').addEventListener('click', startGame);
+      render();
+    })();
+  </script>
+</body>
+</html>
